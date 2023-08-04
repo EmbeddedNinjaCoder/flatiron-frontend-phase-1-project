@@ -1,4 +1,4 @@
-// console.log("Connected");
+console.log("Connected");
 
 // const searchTermsInput = document.body.querySelector("#search-terms");
 
