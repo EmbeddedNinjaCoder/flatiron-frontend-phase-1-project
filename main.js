@@ -4,16 +4,26 @@ console.log("Connected");
 
 // Elements
 const cuisineSelect = document.querySelector("#cuisines");
+const categorySelect = document.querySelector("#categories");
+
 //console.log(cuisineSelect);
 
 // Function calls
 getCuisines();
+getCategories();
 
 function getCuisines() {
   fetch("https://www.themealdb.com/api/json/v1/1/list.php?a=list")
     .then((r) => r.json())
     .then((cuisines) => renderCuisineOptions(cuisines.meals))
-    .catch();
+    .catch((error) => alert(error));
+}
+
+function getCategories() {
+  fetch("https://www.themealdb.com/api/json/v1/1/list.php?c=list")
+    .then((r) => r.json())
+    .then((categories) => renderCategoryOptions(categories.meals))
+    .catch((error) => alert(error));
 }
 
 function renderCuisineOptions(cuisines) {
@@ -22,10 +32,20 @@ function renderCuisineOptions(cuisines) {
     const option = document.createElement("option");
     option.value = cuisine.strArea;
     option.textContent = cuisine.strArea;
-    console.log(option);
+    //console.log(option);
     cuisineSelect.append(option);
   });
-  // console.log(cuisines);
+}
+// console.log(cuisines);
+
+function renderCategoryOptions(categories) {
+  //console.log(categories);
+  categories.forEach((category) => {
+    const option = document.createElement("option");
+    option.value = category.strCategory;
+    option.textContent = category.strCategory;
+    categorySelect.append(option);
+  });
 }
 
 // ---------------------------------------------------------------------
