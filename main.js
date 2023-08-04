@@ -12,6 +12,12 @@ const categorySelect = document.querySelector("#categories");
 getCuisines();
 getCategories();
 
+// Event Listeners
+
+cuisineSelect.addEventListener("change", getRecipesByCuisine);
+//categorySelect.addEventListener("change", getRecipesByCategory);
+
+// Dropdown functions
 function getCuisines() {
   fetch("https://www.themealdb.com/api/json/v1/1/list.php?a=list")
     .then((r) => r.json())
@@ -36,7 +42,6 @@ function renderCuisineOptions(cuisines) {
     cuisineSelect.append(option);
   });
 }
-// console.log(cuisines);
 
 function renderCategoryOptions(categories) {
   //console.log(categories);
@@ -46,6 +51,29 @@ function renderCategoryOptions(categories) {
     option.textContent = category.strCategory;
     categorySelect.append(option);
   });
+}
+
+// Recipe collection functions
+
+function getRecipesByCuisine(e) {
+  //console.log(e);
+  //console.log(e.target.value);
+  const cuisine = e.target.value;
+
+  fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?a=${cuisine}`)
+    .then((r) => r.json())
+    .then((recipes) => renderAllRecipes(recipes.meals))
+    .catch((error) => alert(error));
+}
+
+function renderAllRecipes(recipes) {
+  //console.log(recipes);
+  recipes.forEach((recipe) => {
+    console.log(recipe);
+    //renderRecipeCard(recipe);
+  });
+  cuisineSelect.value = "";
+  categorySelect.value = "";
 }
 
 // ---------------------------------------------------------------------
