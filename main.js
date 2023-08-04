@@ -1,4 +1,24 @@
 console.log("Connected");
+// https://www.themealdb.com/api/json/v1/1/list.php?a=list
+//https://www.themealdb.com/api/json/v1/1/filter.php?a=${cuisine}
+
+// Elements
+const cuisineSelect = document.querySelector("#cuisines");
+//console.log(cuisineSelect);
+
+// Function calls
+getCuisines();
+
+function getCuisines() {
+  fetch("https://www.themealdb.com/api/json/v1/1/list.php?a=list")
+    .then((r) => r.json())
+    .then((cuisines) => console.log(cuisines))
+    .catch();
+}
+
+// ---------------------------------------------------------------------
+//----------------------------------------------------------------------
+//----------------------------------------------------------------------
 
 // const searchTermsInput = document.body.querySelector("#search-terms");
 
