@@ -10,7 +10,8 @@ const recipeContainer = document.querySelector(".recipe-container");
 //console.log(cuisineSelect);
 
 // Function calls
-getCuisines();
+getCuisines(); //vvv
+//renderArtistOptions(); // xxx
 getCategories();
 
 // Event Listeners
@@ -20,39 +21,37 @@ categorySelect.addEventListener("change", getRecipesByCategory);
 
 // Dropdown functions
 function getCuisines() {
-  fetch("https://www.themealdb.com/api/json/v1/1/list.php?a=list")
-    //fetch("https://www.themealdb.com/api/json/v1/1/list.php?c=list")
+  // fetch("https://www.themealdb.com/api/json/v1/1/list.php?a=list") vvv
+  fetch(
+    "https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=AugusteRenoir"
+  )
     .then((r) => r.json())
-    .then((cuisines) => renderCuisineOptions(cuisines.meals))
-    //.then((cuisines) => console.log(cuisines.meals))
+    //.then((cuisines) => console.log(cuisines.objectIDs))
+    .then((cuisines) => renderCuisineOptions(cuisines.objectIDs))
+    //.then((cuisines) => renderCuisineOptions(cuisines.meals)) vvv
     .catch((error) => alert(error));
 }
-// function getCuisines() {
-//   fetch("https://www.themealdb.com/api/json/v1/1/list.php?a=list")
-//     .then((r) => r.json())
-//     .then((cuisines) => console.log(cuisines))
-//     .catch((error) => alert(error));
-// }
-
-// //.then((cuisines) => renderCuisineOptions(cuisines.meals))
 
 function getCategories() {
   fetch("https://www.themealdb.com/api/json/v1/1/list.php?c=list")
     .then((r) => r.json())
+    //.then((categories) => console.log(categories))
     .then((categories) => renderCategoryOptions(categories.meals))
     .catch((error) => alert(error));
 }
 
 function renderCuisineOptions(cuisines) {
-  //console.log(cuisines);
+  //vvvvvvvvvvvv
+  console.log(cuisines);
   cuisines.forEach((cuisine) => {
-    const option = document.createElement("option");
-    option.value = cuisine.strArea;
-    option.textContent = cuisine.strArea;
+    //vvvvvvvvvvvvvvvvvvvv
+    const option = document.createElement("option"); //vvvvvvvvvvvvvvvvvvv
+    option.value = cuisine; //vvvvvvvvvvvvvvvvvvvvvv
+    option.textContent = cuisine; //vvvvvvvvvvvvvvvvvvv
     //console.log(option);
-    cuisineSelect.append(option);
-  });
-}
+    cuisineSelect.append(option); //vvvvvvvvvvvvvvvvvvvvvv
+  }); //vvvvvvvvvvvvvvvvv
+} //vvvvvvvvvvvvvvvvv
 
 function renderCategoryOptions(categories) {
   //console.log(categories);
