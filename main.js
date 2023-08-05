@@ -21,10 +21,20 @@ categorySelect.addEventListener("change", getRecipesByCategory);
 // Dropdown functions
 function getCuisines() {
   fetch("https://www.themealdb.com/api/json/v1/1/list.php?a=list")
+    //fetch("https://www.themealdb.com/api/json/v1/1/list.php?c=list")
     .then((r) => r.json())
     .then((cuisines) => renderCuisineOptions(cuisines.meals))
+    //.then((cuisines) => console.log(cuisines.meals))
     .catch((error) => alert(error));
 }
+// function getCuisines() {
+//   fetch("https://www.themealdb.com/api/json/v1/1/list.php?a=list")
+//     .then((r) => r.json())
+//     .then((cuisines) => console.log(cuisines))
+//     .catch((error) => alert(error));
+// }
+
+// //.then((cuisines) => renderCuisineOptions(cuisines.meals))
 
 function getCategories() {
   fetch("https://www.themealdb.com/api/json/v1/1/list.php?c=list")
@@ -102,10 +112,11 @@ function renderRecipeCard(recipe) {
     strMealThumb: recipeImage,
   } = recipe;
 
-  console.log(recipe);
+  //console.log(recipe);
   const cardDiv = document.createElement("div");
   cardDiv.classList.add("card");
   // add event listener to card
+  cardDiv.addEventListener("click", (e) => getRecipeDetails(e, recipeId));
 
   const image = document.createElement("img");
   image.src = recipeImage;
@@ -117,85 +128,148 @@ function renderRecipeCard(recipe) {
   recipeContainer.append(cardDiv);
 }
 
+function getRecipeDetails(e, recipeId) {
+  //console.log(recipeId);
+
+  fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${recipeId}`)
+    .then((r) => r.json())
+    .then((recipe) => console.log(recipe.meals[0]))
+    .catch((error) => alert(error));
+}
+
 // ---------------------------------------------------------------------
 //----------------------------------------------------------------------
 //----------------------------------------------------------------------
 
-// const searchTermsInput = document.body.querySelector("#search-terms");
+// console.log("Connected");  vvvvvvvvvvvvvvvvvvv
+// // https://www.themealdb.com/api/json/v1/1/list.php?a=list
+// //https://www.themealdb.com/api/json/v1/1/filter.php?a=${cuisine}
 
-// // Fetch meal categories data from TheMealDB API
-// const getMealCategories = async () => {
-//   const mealCategoriesApiURL =
-//     "https://www.themealdb.com/api/json/v1/1/categories.php";
-//   try {
-//     const response = await fetch(mealCategoriesApiURL);
-//     //console.log(response);
-//     const data = await response.json();
-//     //console.log("data: ", data)
-//     const categories = data.categories;
-//     console.log(`categories: `, categories);
-//     return categories;
-//   } catch (error) {
-//     console.log(error);
-//     alert("Something went wrong, try again later");
-//   }
-// };
+// // Elements
+// const cuisineSelect = document.querySelector("#cuisines"); vvvvvvvvvvv
+// const categorySelect = document.querySelector("#categories"); vvvvvvvvvvvvv
+// const recipeContainer = document.querySelector(".recipe-container"); vvvvvvvvvvv
 
-// // Render meal categories data to DOM
-// const renderMealCategories = (mealCategoriesArray) => {
-//   console.log("renderMealCategories");
-//   console.table(mealCategoriesArray);
+// //console.log(cuisineSelect);
 
-//   // find and select a UL with meal categories ID DOM element to append my data into
-//   const mealCategoriesList = document.body.querySelector(
-//     "#meal-categories-List"
-//   );
+// // Function calls
+// getCuisines(); vvvvvvvvvvvv
+// getCategories(); vvvvvvvvvvvvvvv
 
-//   mealCategoriesArray.forEach((mealCategory) => {
-//     const mealCategoryListItem = document.createElement("li");
-//     mealCategoryListItem.className = "meal-category-card";
-//     mealCategoriesList.appendChild(mealCategory);
-//   });
+// // Event Listeners
 
-//   // for each element in our meal categories array
-//   // create a wrapping element maybe <li> class of card
-//   // appendChild  the li.card to DOM elemtn
-//   // display the category name, image and description
-//   // image
-//   const mealCategoryImg = document.createElement("img");
+// cuisineSelect.addEventListener("change", getRecipesByCuisine);  vvvvvvvvvvvvv
+// categorySelect.addEventListener("change", getRecipesByCategory);  vvvvvvvvvvv
 
-//   // create an img element
-//   // set img src to category thumbnail url
-//   mealCategoryImg.src = mealCategory.strCategoryThumbnail;
-//   mealCategoryImg.width = 300;
-//   // appendChild image to card
-//   mealCategoryListItem.appendChild(mealCategoryImg);
-//   // give it a mobile friendly max width of 300px
-//   // name
-//   const mealCategoryName = document.createElement("h4");
-//   mealCategoryName.textContent = mealCategory.strCategory;
-//   // create an h4 element
-//   // set h4 element textContent to be meal category name
-//   // appendChild h4 to card
-//   mealCategoryListItem.appendChild(mealCategoryName);
-//   // description
-//   // create p element
-//   const mealCategoryDescription = document.createElement("p");
+// // Dropdown functions
+// function getCuisines() {  vvvvvvvvvvvvvv
+//   fetch("https://www.themealdb.com/api/json/v1/1/list.php?a=list") vvvvvvvvvv
+//     .then((r) => r.json())  vvvvvvvvvvvv
+//     .then((cuisines) => renderCuisineOptions(cuisines.meals)) vvvvvvv
+//     .catch((error) => alert(error)); vvvvvvvvvvvv
+// }  vvvvvvvvvvvvvvvvv
 
-//   // set p element textContent to be meal category description
-//   mealCategoryDescription.textContent = mealCategory.strCategoryDescription;
-//   // appendChild p to card
-//   mealCategoryListItem.appendChild(mealCategoryDescription);
-// };
+// function getCategories() {   vvvvvvvvvvvvvv
+//   fetch("https://www.themealdb.com/api/json/v1/1/list.php?c=list")  vvvvvvvvvvvv
+//     .then((r) => r.json())   vvvvvvvvvvvvvvvv
+//     .then((categories) => renderCategoryOptions(categories.meals))  vvvvvvvvvvvv
+//     .catch((error) => alert(error));   vvvvvvvvvvvvvvv
+// }  vvvvvvvvvv
 
-// // Function to call when form input is given focus
-// const handleFormInputFocus = async () => {
-//   console.log("focus ocurred");
+// function renderCuisineOptions(cuisines) {   vvvvvvvvvvvv
+//   //console.log(cuisines);
+//   cuisines.forEach((cuisine) => {    vvvvvvvvvvvvvvvvvvvv
+//     const option = document.createElement("option");   vvvvvvvvvvvvvvvvvvv
+//     option.value = cuisine.strArea;  vvvvvvvvvvvvvvvvvvvvvv
+//     option.textContent = cuisine.strArea;   vvvvvvvvvvvvvvvvvvv
+//     //console.log(option);
+//     cuisineSelect.append(option);  vvvvvvvvvvvvvvvvvvvvvv
+//   });   vvvvvvvvvvvvvvvvv
+// }  vvvvvvvvvvvvvvvvv
 
-//   //   const mealCategoriesObj =
-//   const mealCategoriesArray = await getMealCategories();
-//   renderMealCategories(mealCategoriesArray);
-// };
+// function renderCategoryOptions(categories) {  vvvvvvvvvv
+//   //console.log(categories);
+//   categories.forEach((category) => {   vvvvvvvvvvvvvvv
+//     const option = document.createElement("option");  vvvvvvvvvvvv
+//     option.value = category.strCategory;    vvvvvvvvvvvvvvvvv
+//     option.textContent = category.strCategory;    vvvvvvvvvvvvvvv
+//     categorySelect.append(option);   vvvvvvvvvvvvvvvvvvvvvv
+//   });   vvvvvvvvvvvvvvv
+// }  vvvvvvvvvvvvvvvvv
 
-// // Add event listener to search term input
-// searchTermsInput.addEventListener("focus", handleFormInputFocus);
+// // Recipe collection functions
+
+// function getRecipesByCuisine(e) {   vvvvvvvvvvvv
+//   //console.log(e);
+//   //console.log(e.target.value);
+//   const cuisine = e.target.value;   vvvvvvvvvvvvvvvvv
+
+//   fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?a=${cuisine}`)  vvvvvvvv
+//     .then((r) => r.json())   vvvvvvvvvvvv
+//     .then((recipes) => renderAllRecipes(recipes.meals))   vvvvvvvvvvvv
+//     .catch((error) => alert(error));  vvvvvvvvvvvvvvvvv
+// }  vvvvvvvvvvvvvvvvv
+
+// function getRecipesByCategory(e) {  vvvvvvvvvvvvv
+//   //console.log(e);
+//   //console.log(e.target.value);
+//   const category = e.target.value;  vvvvvvvvvvvvvv
+
+//   fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`)  vvvvv
+//     .then((r) => r.json())   vvvvvvvvvvv
+//     .then((recipes) => renderAllRecipes(recipes.meals))  vvvvvvvvvv
+//     .catch((error) => alert(error));  vvvvvvvvvvvvvvvv
+// } vvvvvvvvv
+
+// function renderAllRecipes(recipes) {  vvvvvvvvvvv
+//   //clear container for the next selection
+//   recipeContainer.replaceChildren();  vvvvvvvvvvv
+
+//   //console.log(recipes);
+//   recipes.forEach((recipe) => {  vvvvvvvvvvvvv
+//     //console.log(recipe);
+//     renderRecipeCard(recipe);   vvvvvvvvvvvvvvvvv
+//   });  vvvvvvvvvvv
+//   cuisineSelect.value = "";  vvvvvvvvvvvvvv
+//   categorySelect.value = "";  vvvvvvvvvvvvvvvvv
+// }  vvvvvvvvvvvvvvvvvvvv
+
+// function renderRecipeCard(recipe) {  vvvvvvvvvvvvvvvv
+//   //console.log(recipe.strMeal);
+//   //console.log(strMeal);
+
+//   // Deconstructing
+//   const {                     vvvvvvvvvvvvvvv
+//     idMeal: recipeId,        vvvvvvvvvvvvvv
+//     strMeal: recipeName,     vvvvvvvvvvvvvvvvv
+//     strMealThumb: recipeImage,  vvvvvvvvvvvv
+//   } = recipe;                  vvvvvvvvvvvvvvvv
+
+//   //console.log(recipe);
+//   const cardDiv = document.createElement("div");  vvvvvvvvvvvv
+//   cardDiv.classList.add("card");  vvvvvvvvvvvvvv
+//   // add event listener to card
+//   cardDiv.addEventListener("click", (e) => getRecipeDetails(e, recipeId));  vvvvvv
+
+//   const image = document.createElement("img");  vvvvvvvvvvvv
+//   image.src = recipeImage;  vvvvvvvvvvvvvvv
+
+//   const title = document.createElement("h3");  vvvvvvvvvvvvv
+//   title.textContent = recipeName;   vvvvvvvvvvvvvvvv
+
+//   cardDiv.append(image, title);    vvvvvvvvvvvvvvvvvvvvvv
+//   recipeContainer.append(cardDiv);   vvvvvvvvvvvvvvvvvvvv
+// }   vvvvvvvvvvvvvvvv
+
+// function getRecipeDetails(e, recipeId) {  vvvvvvvvv
+//   //console.log(recipeId);
+
+//   fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${recipeId}`)  vvvvv
+//     .then((r) => r.json())            vvvvv
+//     .then((recipe) => console.log(recipe.meals[0]))  vvvvv
+//     .catch((error) => alert(error));   vvvvv
+// } vvvvv
+
+// ---------------------------------------------------------------------
+//----------------------------------------------------------------------
+//----------------------------------------------------------------------
