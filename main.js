@@ -151,7 +151,7 @@ function renderArtCard(famousArtwork) {
 
   // add event listener to card
   cardDiv.addEventListener("click", (e) =>
-    getRecipeDetails(e, famousArtwork.medium, famousArtwork.objectDate)
+    getArtworkDetails(e, famousArtwork.medium, famousArtwork.objectDate)
   );
 
   const image = document.createElement("img");
@@ -164,7 +164,7 @@ function renderArtCard(famousArtwork) {
   artImageContainer.append(cardDiv);
 }
 
-function getRecipeDetails(e, a, z) {
+function getArtworkDetails(e, a, z) {
   console.log(a);
   console.log(z);
 
