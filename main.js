@@ -56,15 +56,18 @@ function renderArtTitles(artItems) {
 
         .then((artObject) => {
           //Add filter for no primary image here
-          option.value = artObject.objectID;
-          option.textContent = artObject.title;
+          if (artObject.primaryImage !== "") {
+            option.value = artObject.objectID;
+            option.textContent = artObject.title;
+            artItemFromList.append(option);
+          }
         })
         .catch((error) => alert(error));
 
       //option.value = cuisine; //vvvvvvvvvvvvvvvvvvvvvv
       //option.textContent = cuisine; //vvvvvvvvvvvvvvvvvvv
       //console.log(option);
-      artItemFromList.append(option);
+      //artItemFromList.append(option);
     }
   });
   //} //vvvvvvvvvvvvvvvvv
