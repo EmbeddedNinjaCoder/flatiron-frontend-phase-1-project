@@ -1,12 +1,30 @@
 body {
-  background-color: lightblue;
+  background-color: rgb(221, 135, 23);
   font-family: "Times New Roman", "Times New Roman", Times, serif;
 }
+
 .card {
   max-width: 30%;
   border: solid 1px;
   margin: 20px;
   padding: 10px;
+  background-color: antiquewhite;
+}
+.main-title {
+  text-align: center;
+  max-width: 40%;
+  border: solid 1px;
+  margin: 20px;
+  padding: 5px;
+  background-color: antiquewhite;
+}
+
+#artItems {
+  text-align: center;
+  max-width: 40%;
+  border: solid 1px;
+  margin: 20px;
+  padding: 5px;
   background-color: antiquewhite;
 }
 
