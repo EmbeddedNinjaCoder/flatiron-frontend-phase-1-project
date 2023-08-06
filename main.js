@@ -38,31 +38,38 @@ function getArtIds() {
 //Receive art ID list and render as dropdown list item in the form of an art title
 function renderArtTitles(artItems) {
   // console.log(artItems);
+
   artItems.forEach((artwork) => {
     //`https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=${cuisine}`
     //"https://collectionapi.metmuseum.org/public/collection/v1/objects/459123"
-    const option = document.createElement("option");
 
-    //Retrieve object related to art ID
-    fetch(
-      `https://collectionapi.metmuseum.org/public/collection/v1/objects/${artwork}`
-    )
-      //`https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=${cuisine}`
-      //"https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=cuisine"
-      .then((r) => r.json())
-      //.then((artObject) => console.log(artObject))
+    // Added if to remove problem object record on Met museum server side
+    if (artwork !== 844492) {
+      const option = document.createElement("option");
 
-      .then((artObject) => {
-        option.value = artObject.objectID;
-        option.textContent = artObject.title;
-      })
-      .catch((error) => alert(error));
+      //Retrieve object related to art ID
+      fetch(
+        `https://collectionapi.metmuseum.org/public/collection/v1/objects/${artwork}`
+      )
+        //`https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=${cuisine}`
+        //"https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=cuisine"
+        .then((r) => r.json())
+        //.then((artObject) => console.log(artObject))
 
-    //option.value = cuisine; //vvvvvvvvvvvvvvvvvvvvvv
-    //option.textContent = cuisine; //vvvvvvvvvvvvvvvvvvv
-    //console.log(option);
-    artItemFromList.append(option);
-  }); //vvvvvvvvvvvvvvvvv
+        .then((artObject) => {
+          //Add filter for no primary image here
+          option.value = artObject.objectID;
+          option.textContent = artObject.title;
+        })
+        .catch((error) => alert(error));
+
+      //option.value = cuisine; //vvvvvvvvvvvvvvvvvvvvvv
+      //option.textContent = cuisine; //vvvvvvvvvvvvvvvvvvv
+      //console.log(option);
+      artItemFromList.append(option);
+    }
+  });
+  //} //vvvvvvvvvvvvvvvvv
 } //vvvvvvvvvvvvvvvvv
 
 // function renderCategoryOptions(categories) {
@@ -88,8 +95,8 @@ function getArtItemByTitle(e) {
     //fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?a=${cuisine}`)
     .then((r) => r.json())
     //.then((recipes) => renderRecipeCard(recipes)) //nnnnnnnnnnnnnnnnnnnnnnnnnnnn
-    //.then((recipes) => renderAllRecipes(recipes))
-    .then((recipes) => console.log(recipes))
+    .then((recipes) => renderRecipeCard(recipes))
+    //.then((recipes) => console.log(recipes))
     .catch((error) => alert(error));
 
   // fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?a=${cuisine}`) vvv
@@ -122,28 +129,28 @@ function getArtItemByTitle(e) {
 //   categorySelect.value = "";
 // }
 
-function renderRecipeCard(recipe) {
+function renderRecipeCard(famousArtwork) {
   //console.log(recipe.strMeal);
   //console.log(strMeal);
 
-  // Deconstructing
-  const {
-    idMeal: recipeId,
-    strMeal: recipeName,
-    strMealThumb: recipeImage,
-  } = recipe;
+  // // Deconstructing
+  // const {
+  //   objectID: artId,
+  //   strMeal: artName,
+  //   strMealThumb: artImage,
+  // } = famousArtwork;
 
-  //console.log(recipe);
+  //console.log(famousArtwork);
   const cardDiv = document.createElement("div");
   cardDiv.classList.add("card");
   // add event listener to card
-  cardDiv.addEventListener("click", (e) => getRecipeDetails(e, recipeId));
+  //cardDiv.addEventListener("click", (e) => getRecipeDetails(e, recipeId));
 
   const image = document.createElement("img");
-  image.src = recipeImage;
+  image.src = famousArtwork.primaryImage;
 
   const title = document.createElement("h3");
-  title.textContent = recipeName;
+  title.textContent = famousArtwork.title;
 
   cardDiv.append(image, title);
   recipeContainer.append(cardDiv);
