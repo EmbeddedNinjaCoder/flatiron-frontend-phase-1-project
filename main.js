@@ -51,8 +51,6 @@ function renderArtTitles(artItems) {
       fetch(
         `https://collectionapi.metmuseum.org/public/collection/v1/objects/${artwork}`
       )
-        //`https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=${cuisine}`
-        //"https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=cuisine"
         .then((r) => r.json())
         //.then((artObject) => console.log(artObject))
 
@@ -130,6 +128,10 @@ function getArtItemByTitle(e) {
 // }
 
 function renderRecipeCard(famousArtwork) {
+  //clear container for the next selection
+
+  recipeContainer.replaceChildren();
+
   //console.log(recipe.strMeal);
   //console.log(strMeal);
 
