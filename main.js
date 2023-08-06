@@ -3,7 +3,7 @@ console.log("Connected");
 // Capture dropdown and container elements into const
 const artItemFromList = document.querySelector("#artItems");
 //const categorySelect = document.querySelector("#categories");
-const recipeContainer = document.querySelector(".recipe-container");
+const artImageContainer = document.querySelector(".art-container");
 
 // Intializing function calls
 getArtIds();
@@ -86,14 +86,14 @@ function renderArtTitles(artItems) {
 function getArtItemByTitle(e) {
   //console.log(e);
   console.log(e.target.value);
-  const cuisine = e.target.value;
+  const nextArtId = e.target.value;
   fetch(
-    `https://collectionapi.metmuseum.org/public/collection/v1/objects/${cuisine}`
+    `https://collectionapi.metmuseum.org/public/collection/v1/objects/${nextArtId}`
   )
     //fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?a=${cuisine}`)
     .then((r) => r.json())
     //.then((recipes) => renderRecipeCard(recipes)) //nnnnnnnnnnnnnnnnnnnnnnnnnnnn
-    .then((recipes) => renderRecipeCard(recipes))
+    .then((artObjectReady) => renderArtCard(artObjectReady))
     //.then((recipes) => console.log(recipes))
     .catch((error) => alert(error));
 
@@ -127,10 +127,10 @@ function getArtItemByTitle(e) {
 //   categorySelect.value = "";
 // }
 
-function renderRecipeCard(famousArtwork) {
+function renderArtCard(famousArtwork) {
   //clear container for the next selection
 
-  recipeContainer.replaceChildren();
+  artImageContainer.replaceChildren();
 
   //console.log(recipe.strMeal);
   //console.log(strMeal);
@@ -145,8 +145,11 @@ function renderRecipeCard(famousArtwork) {
   //console.log(famousArtwork);
   const cardDiv = document.createElement("div");
   cardDiv.classList.add("card");
+
   // add event listener to card
-  //cardDiv.addEventListener("click", (e) => getRecipeDetails(e, recipeId));
+  cardDiv.addEventListener("click", (e) =>
+    getRecipeDetails(e, famousArtwork.medium, famousArtwork.objectDate)
+  );
 
   const image = document.createElement("img");
   image.src = famousArtwork.primaryImage;
@@ -155,16 +158,29 @@ function renderRecipeCard(famousArtwork) {
   title.textContent = famousArtwork.title;
 
   cardDiv.append(image, title);
-  recipeContainer.append(cardDiv);
+  artImageContainer.append(cardDiv);
 }
 
-function getRecipeDetails(e, recipeId) {
-  //console.log(recipeId);
+function getRecipeDetails(e, a, z) {
+  console.log(a);
+  console.log(z);
 
-  fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${recipeId}`)
-    .then((r) => r.json())
-    .then((recipe) => console.log(recipe.meals[0]))
-    .catch((error) => alert(error));
+  const moreInfoDiv = document.createElement("div");
+  moreInfoDiv.classList.add("moreInfoCard");
+
+  const title2 = document.createElement("h4");
+  title2.textContent = a;
+
+  const title3 = document.createElement("h4");
+  title3.textContent = z;
+
+  moreInfoDiv.append(title2, title3);
+  artImageContainer.append(moreInfoDiv);
+
+  // fetch(`https://www.themealdb.com/api/json/v1/1/lookup.php?i=${recipeId}`)
+  //   .then((r) => r.json())
+  //   .then((recipe) => console.log(recipe.meals[0]))
+  //   .catch((error) => alert(error));
 }
 
 // ---------------------------------------------------------------------

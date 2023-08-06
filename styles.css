@@ -3,6 +3,13 @@ body {
   font-family: "Times New Roman", "Times New Roman", Times, serif;
 }
 
+.moreInfoCard {
+  max-width: 30%;
+  margin: 20px;
+  padding: 10px;
+  background-color: rgb(221, 135, 23);
+}
+
 .card {
   max-width: 30%;
   border: solid 1px;
