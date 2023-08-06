@@ -171,10 +171,10 @@ function getArtworkDetails(e, a, z) {
   const moreInfoDiv = document.createElement("div");
   moreInfoDiv.classList.add("moreInfoCard");
 
-  const title2 = document.createElement("h4");
+  const title2 = document.createElement("h1");
   title2.textContent = a;
 
-  const title3 = document.createElement("h4");
+  const title3 = document.createElement("h1");
   title3.textContent = z;
 
   moreInfoDiv.append(title2, title3);
