@@ -10,7 +10,7 @@ const recipeContainer = document.querySelector(".recipe-container");
 //console.log(cuisineSelect);
 
 // Function calls
-getCuisines(); //vvv
+getArtTitles(); //vvv
 //renderArtistOptions(); // xxx
 getCategories();
 
@@ -20,7 +20,7 @@ cuisineSelect.addEventListener("change", getRecipesByCuisine);
 categorySelect.addEventListener("change", getRecipesByCategory);
 
 // Dropdown functions
-function getCuisines() {
+function getArtTitles() {
   // fetch("https://www.themealdb.com/api/json/v1/1/list.php?a=list") vvv
   fetch(
     "https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=AugusteRenoir"
@@ -35,19 +35,35 @@ function getCuisines() {
 function getCategories() {
   fetch("https://www.themealdb.com/api/json/v1/1/list.php?c=list")
     .then((r) => r.json())
-    //.then((categories) => console.log(categories))
     .then((categories) => renderCategoryOptions(categories.meals))
     .catch((error) => alert(error));
 }
 
 function renderCuisineOptions(cuisines) {
-  //vvvvvvvvvvvv
   console.log(cuisines);
   cuisines.forEach((cuisine) => {
-    //vvvvvvvvvvvvvvvvvvvv
+    //`https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=${cuisine}`
+    //"https://collectionapi.metmuseum.org/public/collection/v1/objects/459123"
+    // `https://www.themealdb.com/api/json/v1/1/filter.php?a=${cuisine}`
+
     const option = document.createElement("option"); //vvvvvvvvvvvvvvvvvvv
-    option.value = cuisine; //vvvvvvvvvvvvvvvvvvvvvv
-    option.textContent = cuisine; //vvvvvvvvvvvvvvvvvvv
+
+    fetch(
+      `https://collectionapi.metmuseum.org/public/collection/v1/objects/${cuisine}`
+    )
+      //`https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=${cuisine}`
+      //"https://collectionapi.metmuseum.org/public/collection/v1/search?hasImages=true&q=cuisine"
+      .then((r) => r.json())
+      //.then((artObject) => console.log(artObject))
+
+      .then((artObject) => {
+        option.value = artObject.title;
+        option.textContent = artObject.title;
+      })
+      .catch((error) => alert(error));
+
+    //option.value = cuisine; //vvvvvvvvvvvvvvvvvvvvvv
+    //option.textContent = cuisine; //vvvvvvvvvvvvvvvvvvv
     //console.log(option);
     cuisineSelect.append(option); //vvvvvvvvvvvvvvvvvvvvvv
   }); //vvvvvvvvvvvvvvvvv
@@ -152,7 +168,7 @@ function getRecipeDetails(e, recipeId) {
 // //console.log(cuisineSelect);
 
 // // Function calls
-// getCuisines(); vvvvvvvvvvvv
+// getArtTitles(); vvvvvvvvvvvv
 // getCategories(); vvvvvvvvvvvvvvv
 
 // // Event Listeners
@@ -161,7 +177,7 @@ function getRecipeDetails(e, recipeId) {
 // categorySelect.addEventListener("change", getRecipesByCategory);  vvvvvvvvvvv
 
 // // Dropdown functions
-// function getCuisines() {  vvvvvvvvvvvvvv
+// function getArtTitles() {  vvvvvvvvvvvvvv
 //   fetch("https://www.themealdb.com/api/json/v1/1/list.php?a=list") vvvvvvvvvv
 //     .then((r) => r.json())  vvvvvvvvvvvv
 //     .then((cuisines) => renderCuisineOptions(cuisines.meals)) vvvvvvv
