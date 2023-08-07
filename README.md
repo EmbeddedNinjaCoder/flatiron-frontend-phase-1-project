@@ -45,6 +45,12 @@ A standard Git workflow is required:
 
 <p>We are currently not looking for additional assistance but this can always change. Check back regularly for latest status. </p>
 
+## Acknowledgments
+
+<p>Special thanks to Monica Gerard whose code snippits are both invaluable and inspring
+(https://github.com/mlgvla)
+</p>
+
 ## License
 
 <p>GNU GENERAL PUBLIC LICENSE Version 3, 29 June 2007
